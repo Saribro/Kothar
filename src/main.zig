@@ -43,16 +43,16 @@ pub fn main() !void {
     }
 }
 
-fn produce_frame(frame: *[]u16) void {
+fn produce_frame(frame: []u16) void {
     const static = struct {
         var frame_count: u16 = 0;
     };
-    frame.*[0] = static.frame_count;
+    frame[0] = static.frame_count;
     static.frame_count += 1;
-    std.debug.print(">>> Produced frame {d}\n", .{frame.*[0]});
+    std.debug.print(">>> Produced frame {d}\n", .{frame[0]});
 }
-fn consume_frame(frame: *[]u16) void {
-    std.debug.print("--- Consumed frame {d}\n", .{frame.*[0]});
+fn consume_frame(frame: []u16) void {
+    std.debug.print("--- Consumed frame {d}\n", .{frame[0]});
 }
 
 test "Placeholder" {

@@ -33,13 +33,13 @@ pub const TSBuffer = struct {
         return null;
     }
 
-    pub fn acquire_producer_frame(self: *@This()) ?*[]u16 { // producer_frame
+    pub fn acquire_producer_frame(self: *@This()) ?[]u16 { // producer_frame
         self.access.lock();
         defer self.access.unlock();
 
         if (self.find_entry(.FREE)) |entry| {
             entry.state = .PRODUCING;
-            return &entry.value;
+            return entry.value;
         }
         return null;
     }
@@ -53,13 +53,13 @@ pub const TSBuffer = struct {
         }
     }
 
-    pub fn acquire_consumer_frame(self: *@This()) ?*[]u16 { // consumer_frame
+    pub fn acquire_consumer_frame(self: *@This()) ?[]u16 { // consumer_frame
         self.access.lock();
         defer self.access.unlock();
 
         if (self.find_entry(.PRODUCED)) |entry| {
             entry.state = .CONSUMING;
-            return &entry.value;
+            return entry.value;
         }
         return null;
     }
